@@ -20,52 +20,47 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 /* Light-mode neuromorphic tuning: keep surfaces soft, not bulky. */
 @media (prefers-reduced-motion: no-preference){.header-inner,.post-card,.category-card,.about-card,.aside-card,.icon-button,.button-dark{transition:box-shadow .24s ease,transform .24s ease,background-color .24s ease,border-color .24s ease}}
-/* Desktop nav release: top bar becomes side rails around the content shell after scroll. */
+/* Desktop nav release: horizontal side position around the body shell; never centered vertically. */
 @media (min-width:901px){
   .site-header{
-    transition:top .42s cubic-bezier(.22,.7,.22,1),padding-top .42s cubic-bezier(.22,.7,.22,1),height .42s ease;
+    position:sticky;
+    top:0;
+    z-index:20;
+    transition:top .42s cubic-bezier(.22,.7,.22,1),padding-top .42s cubic-bezier(.22,.7,.22,1);
   }
 
   .site-header.is-scrolled{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100vh;
-    padding:0;
+    top:10px;
+    padding-top:2px;
     pointer-events:none;
   }
 
-  .site-header.is-scrolled .header-inner{
-    position:relative;
-    display:block;
-    width:100%;
-    max-width:none;
-    height:100%;
-    margin:0;
-    padding:0;
+  .site-header .header-inner{
+    width:min(var(--shell),calc(100% - 48px));
+    margin-inline:auto;
   }
 
   .site-header.is-scrolled .nav-left,
   .site-header.is-scrolled .nav-right{
     position:fixed;
-    top:78px;
+    top:12px;
+    z-index:30;
     margin:0;
     pointer-events:auto;
     transition:
       left .5s cubic-bezier(.22,.7,.22,1),
       right .5s cubic-bezier(.22,.7,.22,1),
-      top .5s cubic-bezier(.22,.7,.22,1),
       transform .5s cubic-bezier(.22,.7,.22,1),
       box-shadow .28s ease;
   }
 
   .site-header.is-scrolled .nav-left{
-    left:max(14px,calc((100vw - min(var(--shell),calc(100vw - 48px))) / 2 - 14px));
+    left:max(18px,calc(50% - min(var(--shell),calc(100vw - 48px)) / 2 - 4px));
     transform:scale(.96);
   }
 
   .site-header.is-scrolled .nav-right{
-    right:max(14px,calc((100vw - min(var(--shell),calc(100vw - 48px))) / 2 - 14px));
+    right:max(18px,calc(50% - min(var(--shell),calc(100vw - 48px)) / 2 - 4px));
     transform:scale(.96);
   }
 
