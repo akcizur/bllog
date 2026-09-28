@@ -18,7 +18,15 @@ const currentPath=Astro.url.pathname;
 <meta property="og:title" content={title}><meta property="og:description" content={description}><meta property="og:type" content={type}><meta property="og:url" content={canonical}>
 {ogImage&&<meta property="og:image" content={ogImage}/>}<meta name="twitter:card" content={ogImage?'summary_large_image':'summary'}><meta name="twitter:title" content={title}><meta name="twitter:description" content={description}>{ogImage&&<meta name="twitter:image" content={ogImage}/>}
 <title>{title}</title>
-<script is:inline>{`(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'dark' || saved === 'light' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();`}</script>
+<script is:inline>
+  (() => {
+    const saved = localStorage.getItem('theme');
+    const theme = saved === 'dark' || saved === 'light'
+      ? saved
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
 </head>
 <body>
 <header class="site-header"><div class="shell header-inner">
@@ -28,5 +36,19 @@ const currentPath=Astro.url.pathname;
 </div></header>
 <main><slot /></main>
 <footer class="site-footer shell"><div class="footer-inner"><div class="footer-copy"><a class="brand" href={href('/')}><span class="brand-mark">b</span><span>bllog</span></a><p>A small monochrome space for essays, observations, systems and culture.</p></div><div class="footer-links"><a href={href('/journal/')}>Journal</a><a href={href('/categories/')}>Categories</a><a href={href('/tags/')}>Tags</a><a href={href('/rss.xml')}>RSS</a></div></div><div class="footer-bottom"><span>© {new Date().getFullYear()} bllog</span><span>Astro · Vite · GitHub Pages</span></div></footer>
-<script is:inline>{`const toggle=document.getElementById('theme-toggle'); const sync=()=>{const dark=document.documentElement.dataset.theme==='dark'; document.querySelector('.theme-icon-light')?.toggleAttribute('hidden',dark); document.querySelector('.theme-icon-dark')?.toggleAttribute('hidden',!dark);}; sync(); toggle?.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark'; document.documentElement.dataset.theme=next; localStorage.setItem('theme',next); sync();});`}</script>
+<script is:inline>
+  const toggle = document.getElementById('theme-toggle');
+  const sync = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    document.querySelector('.theme-icon-light')?.toggleAttribute('hidden', dark);
+    document.querySelector('.theme-icon-dark')?.toggleAttribute('hidden', !dark);
+  };
+  sync();
+  toggle?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    sync();
+  });
+</script>
 </body></html>
