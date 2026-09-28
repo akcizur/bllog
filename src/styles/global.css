@@ -48,7 +48,7 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
   .site-header.is-scrolled .nav-left,
   .site-header.is-scrolled .nav-right{
     position:fixed;
-    top:50%;
+    top:78px;
     margin:0;
     pointer-events:auto;
     transition:
@@ -61,12 +61,12 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
 
   .site-header.is-scrolled .nav-left{
     left:max(14px,calc((100vw - min(var(--shell),calc(100vw - 48px))) / 2 - 14px));
-    transform:translateY(-50%) scale(.96);
+    transform:scale(.96);
   }
 
   .site-header.is-scrolled .nav-right{
     right:max(14px,calc((100vw - min(var(--shell),calc(100vw - 48px))) / 2 - 14px));
-    transform:translateY(-50%) scale(.96);
+    transform:scale(.96);
   }
 
   .site-header.is-scrolled .nav-left .desktop-nav{
