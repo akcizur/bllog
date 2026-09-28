@@ -57,12 +57,59 @@ const currentPath=Astro.url.pathname;
       themeColor?.setAttribute('content', dark ? '#0d0e10' : '#eceef1');
     };
     let ticking = false;
+    let released = window.scrollY > 24;
+
     const syncScroll = () => {
-      header?.classList.toggle('is-scrolled', window.scrollY > 24);
+      const nextReleased = window.scrollY > 24;
+      if (!header || nextReleased === released) {
+        ticking = false;
+        return;
+      }
+
+      const blocks = [header.querySelector('.nav-left'), header.querySelector('.nav-right')].filter(Boolean);
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        header.classList.toggle('is-scrolled', nextReleased);
+        released = nextReleased;
+        ticking = false;
+        return;
+      }
+
+      const first = blocks.map((el) => el.getBoundingClientRect());
+
+      header.classList.toggle('is-scrolled', nextReleased);
+      const last = blocks.map((el) => el.getBoundingClientRect());
+
+      blocks.forEach((el, index) => {
+        const from = first[index];
+        const to = last[index];
+        const dx = from.left - to.left;
+        const dy = from.top - to.top;
+        const settle = nextReleased ? ' scale(.97)' : '';
+        el.style.transition = 'none';
+        el.style.transform = `translate3d(${dx}px,${dy}px,0)${settle}`;
+      });
+
+      requestAnimationFrame(() => {
+        blocks.forEach((el) => {
+          el.style.transition = 'transform .72s cubic-bezier(.22,.74,.2,1), box-shadow .42s cubic-bezier(.22,.7,.22,1)';
+          el.style.transform = nextReleased ? 'scale(.97)' : 'none';
+        });
+
+        window.setTimeout(() => {
+          blocks.forEach((el) => {
+            el.style.transition = '';
+            el.style.transform = '';
+          });
+        }, 760);
+      });
+
+      released = nextReleased;
       ticking = false;
     };
+
     sync();
-    syncScroll();
+    header?.classList.toggle('is-scrolled', released);
     window.addEventListener('scroll', () => {
       if (!ticking) {
         window.requestAnimationFrame(syncScroll);
