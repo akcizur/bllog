@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { href, slugify, sortPosts, uniqueValues } from '@/lib/content';
+const posts=sortPosts(await getCollection('blog')); const [featured,...rest]=posts; const categories=uniqueValues(posts,'category');
+---
+<BaseLayout>
+<section class="hero shell">
+  <span class="eyebrow">Independent journal · Issue 01</span>
+  <h1>Quiet ideas, clearly written.</h1>
+  <p>A calm, monochrome space for essays, observations, design systems, culture and useful technology.</p>
+  <div class="hero-actions"><a class="button button-dark" href={href('/journal/')}>Browse journal</a><a class="text-link" href={href('/categories/')}>Explore topics →</a></div>
+</section>
+<section class="shell section-stack" aria-labelledby="latest-heading">
+  <div class="section-heading"><div><p class="section-kicker">Latest</p><h2 id="latest-heading">Recent stories</h2></div><a class="text-link" href={href('/journal/')}>View all →</a></div>
+  {featured&&<PostCard post={featured} featured/>}<div class="post-grid">{rest.map(post=><PostCard post={post}/>)}</div>
+</section>
+<section class="shell section-stack compact-section" aria-labelledby="categories-heading">
+  <div class="section-heading"><div><p class="section-kicker">Explore</p><h2 id="categories-heading">By category</h2></div></div>
+  <div class="category-grid">{categories.map(category=><a class="category-card" href={href(`/categories/${slugify(category)}/`)}><span>{category}</span><span aria-hidden="true">↗</span></a>)}</div>
+</section>
+</BaseLayout>

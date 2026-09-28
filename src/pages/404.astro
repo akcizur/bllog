@@ -1,0 +1,5 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { href } from '@/lib/content';
+---
+<BaseLayout title="404 — bllog"><section class="shell error-page"><p class="error-code">404</p><h1>Nothing here.</h1><p>Try returning to the journal.</p><a class="button button-dark" href={href('/journal/')}>Back to journal</a></section></BaseLayout>

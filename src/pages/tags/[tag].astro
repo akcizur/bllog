@@ -1,0 +1,9 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { href, slugify, sortPosts } from '@/lib/content';
+export async function getStaticPaths(){const posts=sortPosts(await getCollection('blog'));const tags=[...new Set(posts.flatMap(p=>p.data.tags))];return tags.map(tag=>({params:{tag:slugify(tag)},props:{tag,posts:posts.filter(p=>p.data.tags.includes(tag))}}));}
+const {tag,posts}=Astro.props;
+---
+<BaseLayout title={`#${tag} — bllog`}><section class="shell page-intro"><p class="section-kicker">Tag</p><h1>#{tag}</h1><p>{posts.length} {posts.length===1?'story':'stories'}.</p></section><section class="shell section-stack"><div class="post-grid three-col">{posts.map(post=><PostCard post={post}/>)}</div></section></BaseLayout>

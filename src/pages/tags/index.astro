@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { href, slugify, sortPosts, uniqueValues } from '@/lib/content';
+const posts=sortPosts(await getCollection('blog')); const tags=uniqueValues(posts,'tags');
+---
+<BaseLayout title="Tags — bllog"><section class="shell page-intro"><p class="section-kicker">Explore</p><h1>Tags</h1><p>Small signals for related ideas.</p></section><section class="shell"><div class="tag-cloud">{tags.map(tag=><a class="filter-pill" href={href(`/tags/${slugify(tag)}/`)}>#{tag}</a>)}</div></section></BaseLayout>

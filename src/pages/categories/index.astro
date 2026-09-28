@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { href, slugify, sortPosts, uniqueValues } from '@/lib/content';
+const posts=sortPosts(await getCollection('blog')); const categories=uniqueValues(posts,'category');
+---
+<BaseLayout title="Categories — bllog"><section class="shell page-intro"><p class="section-kicker">Explore</p><h1>Categories</h1><p>Four simple doors into the archive.</p></section><section class="shell section-stack"><div class="category-grid large">{categories.map(category=><a class="category-card" href={href(`/categories/${slugify(category)}/`)}><span>{category}</span><span>↗</span></a>)}</div></section></BaseLayout>

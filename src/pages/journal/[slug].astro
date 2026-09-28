@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { formatDate, getRelatedPosts, href, slugify, sortPosts } from '@/lib/content';
+export async function getStaticPaths(){const posts=sortPosts(await getCollection('blog'));return posts.map(post=>({params:{slug:post.id},props:{post}}));}
+const {post}=Astro.props; const {data}=post; const {Content}=await render(post); const related=getRelatedPosts(post,await getCollection('blog'),3);
+---
+<BaseLayout title={`${data.title} — bllog`} description={data.description} image={data.coverImage} type="article">
+<article class="article shell">
+<a class="back-link" href={href('/journal/')}>← Back to journal</a>
+<header class="article-header">
+<div class="post-meta"><span class="pill">{data.category}</span><time datetime={data.pubDate.toISOString()}>{formatDate(data.pubDate)}</time><span>{data.readTimeMinutes} min read</span></div>
+<h1>{data.title}</h1><p class="lead">{data.description}</p>
+<div class="author-row article-author"><img src={data.author.avatar} alt=""/><div><strong>{data.author.name}</strong><span>{data.author.role}</span></div></div>
+</header>
+<figure class="article-cover"><img src={data.coverImage} alt=""/></figure>
+<div class="article-layout"><aside class="article-aside"><div class="aside-card"><span class="aside-label">Filed under</span><a href={href(`/categories/${slugify(data.category)}/`)}>{data.category}</a></div><div class="aside-card"><span class="aside-label">Tags</span><div class="tag-list">{data.tags.map(tag=><a href={href(`/tags/${slugify(tag)}/`)}>#{tag}</a>)}</div></div></aside><div class="prose"><Content/></div></div>
+</article>
+{related.length>0&&<section class="shell section-stack compact-section"><div class="section-heading"><div><p class="section-kicker">Keep reading</p><h2>More in {data.category}</h2></div></div><div class="post-grid three-col">{related.map(post=><PostCard post={post}/>)}</div></section>}
+</BaseLayout>

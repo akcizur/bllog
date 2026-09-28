@@ -1,0 +1,32 @@
+---
+import { href } from '@/lib/content';
+import '@/styles/global.css';
+
+interface Props { title?: string; description?: string; image?: string; type?: 'website' | 'article'; }
+const { title='bllog — Quiet ideas, clearly written', description='A monochrome editorial blog for design, notes, culture and technology.', image, type='website' }=Astro.props;
+const canonical=Astro.url.href;
+const ogImage=image?new URL(image,Astro.url).href:undefined;
+const currentPath=Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content={description}><meta name="generator" content={Astro.generator}><meta name="theme-color" content="#111111">
+<link rel="icon" href={href('/favicon.svg')} type="image/svg+xml"><link rel="canonical" href={canonical}>
+<link rel="sitemap" href={href('/sitemap-index.xml')}><link rel="alternate" type="application/rss+xml" title="bllog RSS" href={href('/rss.xml')}>
+<meta property="og:title" content={title}><meta property="og:description" content={description}><meta property="og:type" content={type}><meta property="og:url" content={canonical}>
+{ogImage&&<meta property="og:image" content={ogImage}/>}<meta name="twitter:card" content={ogImage?'summary_large_image':'summary'}><meta name="twitter:title" content={title}><meta name="twitter:description" content={description}>{ogImage&&<meta name="twitter:image" content={ogImage}/>}
+<title>{title}</title>
+<script is:inline>{`(() => { const saved = localStorage.getItem('theme'); const theme = saved === 'dark' || saved === 'light' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; })();`}</script>
+</head>
+<body>
+<header class="site-header"><div class="shell header-inner">
+<a class="brand" href={href('/')} aria-label="bllog home"><span class="brand-mark" aria-hidden="true">b</span><span>bllog</span></a>
+<nav class="desktop-nav" aria-label="Primary"><a href={href('/journal/')} class:list={{active:currentPath.includes('/journal')}}>Journal</a><a href={href('/categories/')} class:list={{active:currentPath.includes('/categories')||currentPath.includes('/tags')}}>Explore</a><a href={href('/about/')} class:list={{active:currentPath.includes('/about')}}>About</a></nav>
+<div class="header-actions"><a class="button button-dark" href={href('/journal/')}>Read</a><button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle color theme"><span class="theme-icon-light" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.2A8.7 8.7 0 1 1 8.8 3.5 8.7 8.7 0 0 0 20.5 15.2Z"/></svg></span><span class="theme-icon-dark" hidden aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span></button><details class="mobile-menu"><summary class="icon-button" aria-label="Open menu">☰</summary><nav class="mobile-popover"><a href={href('/journal/')}>Journal</a><a href={href('/categories/')}>Explore</a><a href={href('/about/')}>About</a><a href={href('/tags/')}>Tags</a><a href={href('/rss.xml')}>RSS</a></nav></details></div>
+</div></header>
+<main><slot /></main>
+<footer class="site-footer shell"><div class="footer-inner"><div class="footer-copy"><a class="brand" href={href('/')}><span class="brand-mark">b</span><span>bllog</span></a><p>A small monochrome space for essays, observations, systems and culture.</p></div><div class="footer-links"><a href={href('/journal/')}>Journal</a><a href={href('/categories/')}>Categories</a><a href={href('/tags/')}>Tags</a><a href={href('/rss.xml')}>RSS</a></div></div><div class="footer-bottom"><span>© {new Date().getFullYear()} bllog</span><span>Astro · Vite · GitHub Pages</span></div></footer>
+<script is:inline>{`const toggle=document.getElementById('theme-toggle'); const sync=()=>{const dark=document.documentElement.dataset.theme==='dark'; document.querySelector('.theme-icon-light')?.toggleAttribute('hidden',dark); document.querySelector('.theme-icon-dark')?.toggleAttribute('hidden',!dark);}; sync(); toggle?.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark'; document.documentElement.dataset.theme=next; localStorage.setItem('theme',next); sync();});`}</script>
+</body></html>
