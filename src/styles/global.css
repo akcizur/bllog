@@ -77,3 +77,124 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
     transform:none;
   }
 }
+
+/* Modern material remaster — monochrome tonal surfaces + soft spotlight. */
+:root{
+  --bg:#f6f7f9;
+  --fg:#1a1b1f;
+  --card:#fbfbfd;
+  --solid:#f8f9fb;
+  --muted:#676a72;
+  --soft:#eceef2;
+  --line:#d9dce2;
+  --glass:rgba(250,251,253,.78);
+  --glass-line:rgba(26,27,31,.10);
+  --surface-1:#fbfbfd;
+  --surface-2:#f2f3f6;
+  --surface-3:#e9ebef;
+  --state-hover:rgba(26,27,31,.055);
+  --state-press:rgba(26,27,31,.10);
+  --elevation-1:0 1px 2px rgba(20,22,28,.055),0 5px 14px rgba(20,22,28,.045);
+  --elevation-2:0 2px 4px rgba(20,22,28,.07),0 12px 28px rgba(20,22,28,.065);
+  --elevation-3:0 4px 8px rgba(20,22,28,.08),0 20px 42px rgba(20,22,28,.075);
+  --spot-x:50vw;
+  --spot-y:14vh;
+}
+html[data-theme=dark]{
+  --bg:#111214;
+  --fg:#f1f2f4;
+  --card:#191a1e;
+  --solid:#1b1c20;
+  --muted:#a4a7af;
+  --soft:#24262b;
+  --line:#303239;
+  --glass:rgba(25,27,31,.78);
+  --glass-line:rgba(241,242,244,.10);
+  --surface-1:#191a1e;
+  --surface-2:#202126;
+  --surface-3:#282a30;
+  --state-hover:rgba(241,242,244,.065);
+  --state-press:rgba(241,242,244,.11);
+  --elevation-1:0 1px 2px rgba(0,0,0,.30),0 5px 16px rgba(0,0,0,.18);
+  --elevation-2:0 2px 5px rgba(0,0,0,.32),0 12px 30px rgba(0,0,0,.24);
+  --elevation-3:0 4px 10px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.28);
+}
+body{
+  background:
+    radial-gradient(460px 340px at var(--spot-x) var(--spot-y),rgba(255,255,255,.52),transparent 68%),
+    var(--bg);
+}
+html[data-theme=dark] body{
+  background:
+    radial-gradient(460px 340px at var(--spot-x) var(--spot-y),rgba(255,255,255,.04),transparent 68%),
+    var(--bg);
+}
+body::before{
+  opacity:.48;
+  filter:blur(8px);
+  background:radial-gradient(340px 260px at var(--spot-x) var(--spot-y),rgba(255,255,255,.34),transparent 72%);
+}
+html[data-theme=dark] body::before{
+  opacity:.18;
+  background:radial-gradient(340px 260px at var(--spot-x) var(--spot-y),rgba(255,255,255,.045),transparent 72%);
+}
+.nav-left,.nav-right{
+  background:var(--glass);
+  border-color:var(--glass-line);
+  box-shadow:var(--elevation-2);
+}
+.desktop-nav,.mobile-popover,.filter-pill,.aside-card,.footer-inner{
+  background:var(--surface-1);
+  border-color:var(--glass-line);
+}
+.desktop-nav{box-shadow:0 1px 2px rgba(20,22,28,.045),inset 0 1px 0 rgba(255,255,255,.46)}
+.desktop-nav a{transition:background-color .2s ease,color .2s ease}
+.desktop-nav a:hover{background:var(--state-hover)}
+.desktop-nav a.active{
+  background:var(--surface-2);
+  box-shadow:0 1px 2px rgba(20,22,28,.06);
+}
+.post-card,.category-card,.about-card{
+  background:var(--surface-1);
+  border-color:var(--line);
+  box-shadow:var(--elevation-1);
+}
+.post-card:hover,.category-card:hover,.about-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--glass-line);
+  box-shadow:var(--elevation-2);
+}
+.post-card:active,.category-card:active,.about-card:active{transform:translateY(0)}
+.post-card,.category-card,.about-card,.aside-card,.footer-inner{position:relative;overflow:hidden}
+.post-card::after,.category-card::after,.about-card::after,.aside-card::after,.footer-inner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:radial-gradient(220px 160px at var(--spot-x) var(--spot-y),rgba(255,255,255,.13),transparent 72%);
+  opacity:.72;
+}
+html[data-theme=dark] .post-card::after,
+html[data-theme=dark] .category-card::after,
+html[data-theme=dark] .about-card::after,
+html[data-theme=dark] .aside-card::after,
+html[data-theme=dark] .footer-inner::after{
+  background:radial-gradient(220px 160px at var(--spot-x) var(--spot-y),rgba(255,255,255,.025),transparent 72%);
+  opacity:.8;
+}
+.button-dark{box-shadow:var(--elevation-1)}
+.button-dark:hover{box-shadow:var(--elevation-2)}
+.button-dark:active{transform:translateY(0) scale(.985);box-shadow:var(--elevation-1)}
+.icon-button{
+  background:var(--surface-1);
+  border-color:var(--line);
+  box-shadow:var(--elevation-1);
+}
+.icon-button:hover{background:var(--state-hover);box-shadow:var(--elevation-2)}
+.icon-button:active{background:var(--state-press);box-shadow:0 1px 2px rgba(20,22,28,.055)}
+.eyebrow,.pill,.filter-pill{
+  background:var(--surface-2);
+  border-color:var(--line);
+  box-shadow:0 1px 2px rgba(20,22,28,.045);
+}
