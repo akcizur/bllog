@@ -9,7 +9,7 @@ export const GET: APIRoute = async ({ site }) => {
   return rss({
     title: 'bllog',
     description: 'Quiet ideas, clearly written.',
-    site,
+    site: site ?? new URL('https://akcizur.github.io'),
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
