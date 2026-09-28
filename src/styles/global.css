@@ -20,7 +20,7 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 /* Light-mode neuromorphic tuning: keep surfaces soft, not bulky. */
 @media (prefers-reduced-motion: no-preference){.header-inner,.post-card,.category-card,.about-card,.aside-card,.icon-button,.button-dark{transition:box-shadow .24s ease,transform .24s ease,background-color .24s ease,border-color .24s ease}}
-/* Desktop nav release: segments sit outside the body shell, aligned to its edges. */
+/* Desktop nav release: smooth FLIP transition to side positions around the body. */
 @media (min-width:1280px){
   .site-header{
     position:sticky;
@@ -47,23 +47,19 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
     z-index:30;
     margin:0;
     pointer-events:auto;
+    will-change:transform;
     transition:
-      left .5s cubic-bezier(.22,.7,.22,1),
-      right .5s cubic-bezier(.22,.7,.22,1),
-      transform .5s cubic-bezier(.22,.7,.22,1),
-      box-shadow .28s ease;
+      transform .72s cubic-bezier(.22,.74,.2,1),
+      box-shadow .42s cubic-bezier(.22,.7,.22,1);
   }
 
-  /* The inner edge of each segment points toward the body shell. */
   .site-header.is-scrolled .nav-left{
     right:calc(50% + min(var(--shell),calc(100vw - 48px)) / 2 + 18px);
-    transform:scale(.97);
   }
 
   .site-header.is-scrolled .nav-right{
     left:calc(50% + min(var(--shell),calc(100vw - 48px)) / 2 + 18px);
     right:auto;
-    transform:scale(.97);
   }
 
   .site-header.is-scrolled .nav-left .desktop-nav{
@@ -72,6 +68,13 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
 
   .site-header.is-scrolled .nav-right .button{
     transform:none;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .site-header .nav-left,
+    .site-header .nav-right{
+      transition:none;
+    }
   }
 }
 
