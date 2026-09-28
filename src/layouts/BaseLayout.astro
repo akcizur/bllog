@@ -76,5 +76,44 @@ const currentPath=Astro.url.pathname;
       sync();
     });
   })();
+
+  (() => {
+    const root = document.documentElement;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    if (coarse) return;
+
+    let targetX = window.innerWidth * 0.5;
+    let targetY = window.innerHeight * 0.14;
+    let x = targetX;
+    let y = targetY;
+    let frame = 0;
+
+    const render = () => {
+      x += (targetX - x) * 0.085;
+      y += (targetY - y) * 0.085;
+      root.style.setProperty('--spot-x', `${x}px`);
+      root.style.setProperty('--spot-y', `${y}px`);
+
+      if (Math.abs(targetX - x) > 0.15 || Math.abs(targetY - y) > 0.15) {
+        frame = requestAnimationFrame(render);
+      } else {
+        frame = 0;
+      }
+    };
+
+    const move = (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+
+    window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('resize', () => {
+      if (!frame) frame = requestAnimationFrame(render);
+    }, { passive: true });
+
+    root.style.setProperty('--spot-x', `${x}px`);
+    root.style.setProperty('--spot-y', `${y}px`);
+  })();
 </script>
 </body></html>
