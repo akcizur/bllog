@@ -11,4 +11,4 @@ export default defineConfig({
   base: explicitBase ?? (isUserSite || isCustomDomain ? '/' : `/${repo}`),
   trailingSlash:'always',
   integrations:[sitemap()],
-};
+});
