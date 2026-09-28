@@ -7,9 +7,9 @@ const posts=sortPosts(await getCollection('blog')); const [featured,...rest]=pos
 ---
 <BaseLayout>
 <section class="hero shell">
-  <span class="eyebrow">Independent journal · Issue 01</span>
-  <h1>Quiet ideas, clearly written.</h1>
-  <p>A calm, monochrome space for essays, observations, design systems, culture and useful technology.</p>
+  <span class="eyebrow">Jakub Růžička · bllog</span>
+  <h1>Designer, code dev, audio sympatizant.</h1>
+  <p>A personal journal about design, code, systems and sound — with room for experiments, notes and things worth keeping.</p>
   <div class="hero-actions"><a class="button button-dark" href={href('/journal/')}>Browse journal</a><a class="text-link" href={href('/categories/')}>Explore topics →</a></div>
 </section>
 <section class="shell section-stack" aria-labelledby="latest-heading">
