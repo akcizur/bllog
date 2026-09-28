@@ -61,7 +61,8 @@ img{display:block;max-width:100%;filter:grayscale(1)}h1,h2,h3,h4,h5,h6{margin:0;
   }
 
   .site-header.is-scrolled .nav-right{
-    left:calc(50% - min(var(--shell),calc(100vw - 48px)) / 2 + 18px);
+    right:calc((100vw - min(var(--shell),calc(100vw - 48px))) / 2 + 2px);
+    left:auto;
     transform:scale(.97);
   }
 
