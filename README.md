@@ -1,6 +1,6 @@
 # bllog
 
-Personal monochrome Astro + Vite blog for **blog.ruzickajakub.cz** — designer, code dev, audio sympatizant.
+Monochrome Astro + Vite editorial blog template, adapted from akcizur/sf3.
 
 Stack:
 - Astro 7 + Vite
@@ -21,9 +21,9 @@ Build:
 
     bun run build
 
-Local development:
+For this repository the local path is:
 
-    http://localhost:4321/
+    http://localhost:4321/bllog/
 
 Add posts under src/content/blog/. The filename becomes the article slug.
 
@@ -33,10 +33,10 @@ Composition rules:
 - article copy uses a fixed reading measure and balanced side rail;
 - glass blur is restricted to navigation and transient surfaces;
 - imagery is forced to grayscale;
-- typography is system-first with native kerning, ligatures and no synthetic styles.
+- typography uses Google Sans with native kerning, ligatures and no synthetic styles.
 
 GitHub Pages:
-The workflow runs on main and deploys the static Astro output to GitHub Pages.
+The workflow runs on main and deploys the static Astro output. The Astro config derives the /bllog/ base automatically from GITHUB_REPOSITORY.
 
 Custom domain:
-The production domain is `https://blog.ruzickajakub.cz/`, with `public/CNAME` checked into the repository. The Astro base is `/`.
+Set SITE to the domain and BASE to /. Add public/CNAME when needed.
